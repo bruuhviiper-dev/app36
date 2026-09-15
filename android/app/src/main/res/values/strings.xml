@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Our Love</string>
+    <string name="widget_desc">Days together</string>
+    <string name="widget_subtitle">days together 💞</string>
+    <string name="widget_label_default">Us two</string>
+</resources>
