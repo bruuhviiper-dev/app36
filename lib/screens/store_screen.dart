@@ -21,7 +21,6 @@ class StoreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final s = context.watch<AppState>();
     final tr = T.of(context);
-    final price = PurchaseService.instance.priceLabel;
     return Scaffold(
       appBar: AppBar(title: Text(tr.storeTitle)),
       body: ListView(
@@ -70,15 +69,21 @@ class StoreScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   SizedBox(
                     width: double.infinity,
-                    child: FilledButton(
-                      style: FilledButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          foregroundColor: AppTheme.brand,
-                          padding: const EdgeInsets.symmetric(vertical: 14)),
-                      onPressed: () => _buy(context, tr),
-                      child: Text(tr.buyPremium(price),
-                          style: const TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w800)),
+                    // Preço REAL da Play (moeda do país do usuário); atualiza
+                    // quando a loja responde.
+                    child: ListenableBuilder(
+                      listenable: PurchaseService.instance,
+                      builder: (context, _) => FilledButton(
+                        style: FilledButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            foregroundColor: AppTheme.brand,
+                            padding: const EdgeInsets.symmetric(vertical: 14)),
+                        onPressed: () => _buy(context, tr),
+                        child: Text(
+                            tr.buyPremium(PurchaseService.instance.priceLabel),
+                            style: const TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w800)),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 8),
